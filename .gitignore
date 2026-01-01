@@ -1,0 +1,61 @@
+# --------------------
+# Python cache
+# --------------------
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --------------------
+# Virtual environments
+# --------------------
+venv/
+.parler-env/
+parler-env/
+.env/
+.env*/
+
+# --------------------
+# Audio output files
+# --------------------
+audio/
+*.wav
+*.mp3
+
+# --------------------
+# Build / packaging
+# --------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# --------------------
+# Logs & temp files
+# --------------------
+*.log
+*.tmp
+*.cache
+
+# --------------------
+# IDE / Editor
+# --------------------
+.vscode/
+.idea/
+*.iml
+
+# --------------------
+# OS specific
+# --------------------
+.DS_Store
+Thumbs.db
+
+# --------------------
+# Jupyter
+# --------------------
+.ipynb_checkpoints/
+
+# --------------------
+# Torch / HF cache (optional)
+# --------------------
+.cache/
+torch_cache/
