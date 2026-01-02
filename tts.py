@@ -4,12 +4,18 @@ import torch
 import soundfile as sf
 from parler_tts import ParlerTTSForConditionalGeneration
 from transformers import AutoTokenizer
+import re
 
+DESCRIPTION = (
+        "thoma's voice delivers a slightly expressive and animated speech "
+        "with a moderate speed and pitch. The recording is of very high quality, "
+        "with the speaker's voice sounding clear and very close up."
+    )
 
-def generate_tamil_tts_from_json(json_path):
+def generate_tamil_tts_from_json(json_path,readFromObj,description=DESCRIPTION):
     """
     Generate Tamil speech audio using Parler-TTS
-    Reads `tamil_translated_title` from JSON
+    Reads `readFromObj` from JSON
     Saves audio files into ./audio folder
     """
 
@@ -22,11 +28,7 @@ def generate_tamil_tts_from_json(json_path):
     MODEL_NAME = "ai4bharat/indic-parler-tts"
     OUTPUT_FOLDER = "audio"
 
-    DESCRIPTION = (
-        "Jaya's voice delivers a slightly expressive and animated speech "
-        "with a moderate speed and pitch. The recording is of very high quality, "
-        "with the speaker's voice sounding clear and very close up."
-    )
+    
 
     # -----------------------
     # Ensure output folder
@@ -46,7 +48,7 @@ def generate_tamil_tts_from_json(json_path):
     )
 
     # Tokenize description once
-    desc_tokens = desc_tok(DESCRIPTION, return_tensors="pt")
+    desc_tokens = desc_tok(description, return_tensors="pt")
     desc_tokens = {k: v.to(device) for k, v in desc_tokens.items()}
 
     # -----------------------
@@ -62,9 +64,10 @@ def generate_tamil_tts_from_json(json_path):
     # Generate audio
     # -----------------------
     for movie in movies:
-        tamil_text = movie.get("tamil_translated_title", "").strip()
+        tamil_text=re.sub(r"[^\w\s]+", "",  movie.get(readFromObj, "")).strip()         
+        print(tamil_text,"tamil_text")
         title = movie.get("title", "audio")
-
+        
         if not tamil_text:
             print("⚠️ Skipping entry (missing tamil_translated_title)")
             continue
