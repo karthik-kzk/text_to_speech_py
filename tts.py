@@ -64,7 +64,8 @@ def generate_tamil_tts_from_json(json_path,readFromObj,description=DESCRIPTION):
     # Generate audio
     # -----------------------
     for movie in movies:
-        tamil_text=re.sub(r"[^\w\s]+", "",  movie.get(readFromObj, "")).strip()         
+        tamil_text = movie.get(readFromObj, "").strip()
+       
         print(tamil_text,"tamil_text")
         title = movie.get("title", "audio")
         
