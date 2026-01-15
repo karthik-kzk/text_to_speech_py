@@ -75,9 +75,10 @@ def generate_tamil_tts_from_json(json_path,readFromObj,description=DESCRIPTION):
 
         # Safe filename
         safe_name = (
-            title.replace(" ", "_")
-                 .replace("/", "")
-                 .replace(":", "")
+        str(title)
+            .replace(" ", "_")
+            .replace("/", "")
+            .replace(":", "")
         )
 
         output_path = os.path.join(OUTPUT_FOLDER, f"{safe_name}.wav")
