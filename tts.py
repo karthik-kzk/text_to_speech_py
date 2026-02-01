@@ -12,7 +12,7 @@ DESCRIPTION = (
         "with the speaker's voice sounding clear and very close up."
     )
 
-def generate_tamil_tts_from_json(json_path,readFromObj,description=DESCRIPTION):
+def generate_tamil_tts_from_json(json_path,readFromObj,description=DESCRIPTION,outputFolder="audio"):
     """
     Generate Tamil speech audio using Parler-TTS
     Reads `readFromObj` from JSON
@@ -26,7 +26,7 @@ def generate_tamil_tts_from_json(json_path,readFromObj,description=DESCRIPTION):
     torch.set_num_threads(4)
 
     MODEL_NAME = "ai4bharat/indic-parler-tts"
-    OUTPUT_FOLDER = "audio"
+    OUTPUT_FOLDER = outputFolder
 
     
 
