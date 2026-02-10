@@ -2,6 +2,7 @@ import os
 import json
 import torch
 import soundfile as sf
+import numpy as np
 from parler_tts import ParlerTTSForConditionalGeneration
 from transformers import AutoTokenizer
 import re
@@ -98,9 +99,22 @@ def generate_tamil_tts_from_json(json_path,readFromObj,description=DESCRIPTION,o
             prompt_attention_mask=prompt_tokens["attention_mask"]
         )
 
-        # Save audio
-        audio = gen.cpu().numpy().squeeze()
-        sf.write(output_path, audio, model.config.sampling_rate)
+        # -----------------------
+        # 🔧 FIX: prepare audio for soundfile
+        # -----------------------
+        audio = gen.detach().cpu().numpy()
+        audio = np.asarray(audio, dtype=np.float32).squeeze()
+        audio = np.clip(audio, -1.0, 1.0)
+
+        # Ensure (samples, channels)
+        if audio.ndim == 1:
+            audio = audio[:, None]
+
+        sf.write(
+            output_path,
+            audio,
+            model.config.sampling_rate
+        )
 
         print("✅ Saved")
 
